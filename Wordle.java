@@ -50,6 +50,10 @@ public class Wordle {
         
         int wordLength = secret.length();
         char[] secretChars = secret.toCharArray();
+
+        for (int i = 0; i < wordLength; i++) {
+        resultRow[i] = '_';
+        }
         
         for (int i = 0; i < wordLength; i++) {
             if (guess.charAt(i) == secretChars[i]) {
@@ -60,23 +64,17 @@ public class Wordle {
 
         for (int i = 0; i < wordLength; i++) {
 
-            if (resultRow[i] == 'G') {
-                continue;
-            }
+            if (resultRow[i] != 'G') {
+                char guessChar = guess.charAt(i);
             
-            char guessChar = guess.charAt(i);
-            boolean found = false;
-            
-            for (int j = 0; j < wordLength && !found; j++) {
-                if (secretChars[j] == guessChar) {
-                    resultRow[i] = 'Y';
-                    secretChars[j] = '!';
-                    found = true;
+                for (int j = 0; j < wordLength ; j++) {
+                    if (secretChars[j] == guessChar) {
+                        resultRow[i] = 'Y';
+                        secretChars[j] = '!';
+                        j = wordLength;
+                
+                    }
                 }
-            }
-            
-            if (!found) {
-                resultRow[i] = '_';
             }
         }
     }
