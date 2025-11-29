@@ -52,7 +52,7 @@ public class Wordle {
         char[] secretChars = secret.toCharArray();
 
         for (int i = 0; i < wordLength; i++) {
-        resultRow[i] = '_';
+            resultRow[i] = '_';
         }
         
         for (int i = 0; i < wordLength; i++) {
@@ -63,19 +63,15 @@ public class Wordle {
         }
 
         for (int i = 0; i < wordLength; i++) {
-
             if (resultRow[i] != 'G') {
                 char guessChar = guess.charAt(i);
-            
-                for (int j = 0; j < wordLength ; j++) {
-                    if (secretChars[j] == guessChar) {
-                        resultRow[i] = 'Y';
-                        secretChars[j] = '!';
-                        j = wordLength;
                 
-                    }
+                // Check if this letter exists ANYWHERE in the original secret
+                if (containsChar(secret, guessChar)) {
+                    resultRow[i] = 'Y';
                 }
             }
+            
         }
     }
 
