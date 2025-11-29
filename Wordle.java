@@ -62,16 +62,21 @@ public class Wordle {
             }
         }
 
-        for (int i = 0; i < wordLength; i++) {
+       for (int i = 0; i < wordLength; i++) {
+        // Only check for Yellow if it wasn't a Green match
             if (resultRow[i] != 'G') {
                 char guessChar = guess.charAt(i);
                 
-                // Check if this letter exists ANYWHERE in the original secret
-                if (containsChar(secret, guessChar)) {
-                    resultRow[i] = 'Y';
+                // Check if guessChar exists anywhere in the *remaining* secretChars
+                // The Green matches have been 'consumed' by '!'
+                for (int j = 0; j < wordLength; j++) {
+                    if (secretChars[j] == guessChar) {
+                        resultRow[i] = 'Y';
+                        secretChars[j] = '!'; // Consume this Yellow-matched letter
+                        break; // Move to the next guess letter
+                    }
                 }
             }
-            
         }
     }
 
