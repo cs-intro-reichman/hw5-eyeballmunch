@@ -67,8 +67,12 @@ public class Wordle {
                 char guessChar = guess.charAt(i);
                 
                 // Check if this letter exists ANYWHERE in the original secret
-                if (containsChar(secret, guessChar)) {
-                    resultRow[i] = 'Y';
+                for (int j = 0; j < wordLength; j++) {
+                    if (secretChars[j] == guessChar) {
+                        resultRow[i] = 'Y';
+                        secretChars[j] = '!';
+                        j = wordLength;
+                    }
                 }
             }
             
