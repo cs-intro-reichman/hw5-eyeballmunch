@@ -147,8 +147,9 @@ public class Wordle {
             while (!valid) {
                 System.out.print("Enter your guess (5-letter word): ");
                 guess = input.readString();
+                guess = guess.toUpperCase();
                 
-                if (guess != null && guess.length() == WORD_LENGTH) {
+                if (guess.length() != WORD_LENGTH) {
                     System.out.println("Invalid word. Please try again.");
                 } else {
                     valid = true;
