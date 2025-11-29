@@ -44,7 +44,10 @@ public class Wordle {
     // Compute feedback for a single guess into resultRow.
     // G for exact match, Y if letter appears anywhere else, _ otherwise.
     public static void computeFeedback(String secret, String guess, char[] resultRow) {
-       
+        if (secret == null || guess == null || resultRow == null) {
+            return;
+        }
+        
         int wordLength = secret.length();
         char[] secretChars = secret.toCharArray();
 
