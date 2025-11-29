@@ -44,17 +44,17 @@ public class Wordle {
     // Compute feedback for a single guess into resultRow.
     // G for exact match, Y if letter appears anywhere else, _ otherwise.
     public static void computeFeedback(String secret, String guess, char[] resultRow) {
-		// ...
-		// you may want to use containsChar in your implementation
-
+        if (secret == null || guess == null || resultRow == null) {
+            return;
+        }
+        
         int wordLength = secret.length();
-
         char[] secretChars = secret.toCharArray();
         
         for (int i = 0; i < wordLength; i++) {
             if (guess.charAt(i) == secretChars[i]) {
                 resultRow[i] = 'G';
-                secretChars[i] = '!'; 
+                secretChars[i] = '!';
             }
         }
 
@@ -79,7 +79,6 @@ public class Wordle {
                 resultRow[i] = '_';
             }
         }
-
     }
 
     // Store guess string (chars) into the given row of guesses 2D array.
@@ -151,12 +150,11 @@ public class Wordle {
             String guess = "";
             boolean valid = false;
 
-             // Loop until you read a valid guess
             while (!valid) {
                 System.out.print("Enter your guess (5-letter word): ");
                 guess = input.readString();
                 
-                if (guess.length() != WORD_LENGTH) {
+                if (guess != null && guess.length() == WORD_LENGTH) {
                     System.out.println("Invalid word. Please try again.");
                 } else {
                     valid = true;
@@ -172,22 +170,19 @@ public class Wordle {
             // Print board
             printBoard(guesses, results, attempt);
 
-                // Print board
-                printBoard(guesses, results, attempt);
-
-                // Check win
-                if (isAllGreen(results[attempt])) {
-                    System.out.println("Congratulations! You guessed the word in " + (attempt + 1) + " attempts.");
-                    won = true;
-                }
-
-                attempt++;
+            // Check win
+            if (isAllGreen(results[attempt])) {
+                System.out.println("Congratulations! You guessed the word in " + (attempt + 1) + " attempts.");
+                won = true;
             }
 
-            if (!won) {
-            // ... follow the assignment examples for how the printing should look like
-            System.out.println("Sorry, you did not guess the word.");
-            System.out.println("The secret word was: " + secret);
+            attempt++;
+        }
+
+        if (!won) {
+        // ... follow the assignment examples for how the printing should look like
+        System.out.println("Sorry, you did not guess the word.");
+        System.out.println("The secret word was: " + secret);
         }
 
         input.close();
